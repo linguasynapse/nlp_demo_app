@@ -14,4 +14,4 @@ transformers==4.54.1
 langdetect==1.0.9
 wordcloud==1.9.4
 bleach
-
+langid
