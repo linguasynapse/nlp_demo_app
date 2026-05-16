@@ -1,0 +1,26 @@
+streamlit_app/
+├── Home.py                      # Main entry (Service Spectrum)
+├── utils.py
+├── pages/
+│   ├── NLP_Content_Intelligence.py->🧠 NLP Content Intelligence
+│   ├── Data_Engineering.py -> 🔧 Data Engineering for AI
+│   ├── Asset_Quality_Mgmt.py -> 📚 Asset & Quality Management
+│   ├── Privacy.py.py -> 🔐 Privacy
+│   └── Contact.py -> 📬 Contact
+├── ui/
+│   ├── __init__.py
+│   ├── chrome.py    			#render header and footer
+│   ├── inputs.py              # text areas, sample selectors, bilingual controls
+│   ├── cards.py               # card(), info boxes, muted cards
+│   ├── motion.py              # fade_block(), end(), animations
+│   ├── layout.py              # dashboard(), full(), grid helpers
+│   ├── helpers.py             # make_key(), guarded_action(), notices
+│   ├── styles.py              # CSS blocks, ANIMATION_CSS
+│   ├── tokens.py
+│   └── theme.py
+├── i18n/
+│   ├── __init__.py
+│   ├── strings.py    
+│   └── translator.py            
+└── assets/
+    └── .css
