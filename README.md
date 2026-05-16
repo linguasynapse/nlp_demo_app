@@ -1,5 +1,7 @@
 # NLP Content Intelligence Demo App
 
+[![Streamlit App]([https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nlp-demo-app.streamlit.app/](https://lingua-synapse-nlp-demo-app.streamlit.app/NLP_Content_Intelligence))
+
 This repository contains a Streamlit-based demo application that showcases practical applications of Natural Language Processing (NLP) and related AI technologies. Designed for demonstration and exploration, the app provides an intuitive interface to experience how intelligent language tools can extract insights, manage content, and support data-driven workflows.
 
 ## 🌐 App Structure
