@@ -14,8 +14,8 @@ st.set_page_config(
     layout="wide",
     #initial_sidebar_state=None,
     menu_items={
-        'Get Help': 'mailto:linguasynapse@yahoo.fr',
-        'Report a bug': "mailto:linguasynapse@yahoo.fr",
+        'Get Help': 'mailto:linguasynapse@yahoo.com',
+        'Report a bug': "mailto:linguasynapse@yahoo.com",
         'About': "https://linguasynapse.wordpress.com/",
     }
 )
