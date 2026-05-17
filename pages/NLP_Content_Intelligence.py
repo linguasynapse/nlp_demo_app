@@ -118,10 +118,10 @@ class NLPPage(BasePage):
         if run and raw_text.strip():
             detected_lang = self.st.session_state.get("detected_lang", "en")
             LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
-            if detected_lang in LANGS_NO_WORDCLOUD:
-                self.st.info(f"ℹ️ {self.t('nlp_no_wc_lang')}")
-            else: # Show WordCloud
-                if self.st.checkbox(self.t("nlp_show_wc"), value=True):
+            if self.st.checkbox(self.t("nlp_show_wc"), value=True):
+                if detected_lang in LANGS_NO_WORDCLOUD:
+                    self.st.info(f"ℹ️ {self.t('nlp_no_wc_lang')}")
+                else: # Show WordCloud
                     with self.fade():
                         self.st.subheader(f"☁️ {self.t('nlp_wc')}")
                         try:
