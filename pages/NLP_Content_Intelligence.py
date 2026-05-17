@@ -106,12 +106,12 @@ class NLPPage(BasePage):
                     detected_lang = self.st.session_state.get("detected_lang", "en")
                 
                     # Analyze sentiment
-                    result = model(text)
-                    if isinstance(result, dict): #normalize the API response
-                        result = [result]
-                    label = model(text)[0]["label"]
-                    score = model(text)[0]["score"]
-                    #label, score = self.analyze_sentiment(raw_text)
+                    #result = self.analyze_sentiment(raw_text)
+                    #if isinstance(result, dict): #normalize the API response
+                    #    result = [result]
+                    #label = model(text)[0]["label"]
+                    #score = model(text)[0]["score"]
+                    label, score = self.analyze_sentiment(raw_text)
                     self.st.session_state["sentiment_model_loaded"] = True
                 
                     # Display confidence score
