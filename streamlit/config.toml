@@ -1,5 +1,5 @@
-[global]
-pythonVersion = "python-3.12.3"
+[server]
+pythonVersion = "3.12.*"
 [theme]
 base = "dark"
 primaryColor = "#FF4B4B"
