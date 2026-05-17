@@ -11,6 +11,8 @@ matplotlib==3.10.7
 matplotlib-inline==0.1.7
 jieba==0.42.1
 transformers==4.54.1
+tokenizers>=0.19
+torch>=2.4.0
 langdetect==1.0.9
 wordcloud==1.9.4
 bleach
