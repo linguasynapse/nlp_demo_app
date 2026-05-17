@@ -113,7 +113,7 @@ class NLPPage(BasePage):
                     # Apply font styling only for specific languages
                     # Langues problématiques pour le wordcloud
                     LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
-                    if detected_lang in LANGUES_NO_WORDCLOUD:
+                    if detected_lang in LANGS_NO_WORDCLOUD:
                         self.st.info("ℹ️self.t("nlp_no_wc_lang"))
                         self.st.markdown(f'<div class="custom-sentiment">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
                     else:
