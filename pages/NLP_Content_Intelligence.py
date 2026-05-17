@@ -109,41 +109,44 @@ class NLPPage(BasePage):
                 
                     # Display sentiment result
                     self.normalize_sentiment(label)
-
-                    # Apply font styling only for specific languages
-                    # Langues problématiques pour le wordcloud
-                    LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
-                    if detected_lang in LANGS_NO_WORDCLOUD:
-                        self.st.info(f"ℹ️ {self.t('nlp_no_wc_lang')}")
-                        self.st.markdown(f'<div class="custom-sentiment">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
-                    else:
-                        # For non-Asian languages, just display normally
-                        self.st.markdown(f'<div style="font-size: 24px; margin: 10px 0; ">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
-                
+                    self.st.markdown(f'<div style="font-size: 24px; margin: 10px 0;">{sentiment_text}</div>', unsafe_allow_html=True)
                 else:
                     self.st.info(self.t("nlp_sentiment_run"))
                     with self.st.expander(f"ℹ️ {self.t('about_tool')}"):
                         self.st.caption(self.t("nlp_sentiment_tool_info"))
+                    # Apply font styling only for specific languages
+                    # Langues problématiques pour le wordcloud
+                    #LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
+                    #if detected_lang in LANGS_NO_WORDCLOUD:
+                     #   self.st.info(f"ℹ️ {self.t('nlp_no_wc_lang')}")
+                      #  self.st.markdown(f'<div class="custom-sentiment">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
+                    #else:
+                        # For non-Asian languages, just display normally
+                     #   self.st.markdown(f'<div style="font-size: 24px; margin: 10px 0; ">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
+                
+                #else:
+                 #   self.st.info(self.t("nlp_sentiment_run"))
+                  #  with self.st.expander(f"ℹ️ {self.t('about_tool')}"):
+                   #     self.st.caption(self.t("nlp_sentiment_tool_info"))
     
         # Word cloud section - SIMPLIFIED
         if run and raw_text.strip():
-            if self.st.checkbox(self.t("nlp_show_wc"), value=True):
-                with self.fade():
-                    self.st.subheader(f"☁️ {self.t('nlp_wc')}")
-                
-                    # Simple test first
-                    self.st.write(self.t("nlp_text_len"), len(raw_text))
-                    self.st.write(self.t("nlp_detected_lang"), self.detect_language(raw_text))
-                
-                    # Try to generate word cloud
-                    try:
-                        fig = self.generate_wordcloud(raw_text)
-                        if fig:
-                            self.st.pyplot(fig)
-                        else:
-                            self.st.warning(self.t("nlp_no_wc"))
-                    except Exception as e:
-                        self.st.error(f"{self.t('nlp_error_wc')}: {str(e)}")
+            detected_lang = self.st.session_state.get("detected_lang", "en")
+            LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
+            if detected_lang in LANGS_NO_WORDCLOUD:
+                self.st.info(f"ℹ️ {self.t('nlp_no_wc_lang')}")
+            else: # Show WordCloud
+                if self.st.checkbox(self.t("nlp_show_wc"), value=True):
+                    with self.fade():
+                        self.st.subheader(f"☁️ {self.t('nlp_wc')}")
+                        try:
+                            fig = self.generate_wordcloud(raw_text)
+                            if fig:
+                                self.st.pyplot(fig)
+                            else:
+                                self.st.warning(self.t("nlp_no_wc"))
+                        except Exception as e:
+                            self.st.error(f"{self.t('nlp_error_wc')}: {str(e)}")
 
     def analyze_sentiment(self, text):
         model = self.get_model()
