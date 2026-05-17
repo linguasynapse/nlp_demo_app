@@ -70,7 +70,7 @@ class NLPPage(BasePage):
         left, right = self.dashboard()
     
         with left:
-            with self.card(f"😍😞 {self.t("nlp_sentiment_tool")}", refreshable=False):
+            with self.card(f"😍😞 {self.t('nlp_sentiment_tool')}", refreshable=False):
                 samples = { 
                     self.t("nlp_sentiment_po"): self.t("nlp_sentiment_po_review"),
                     self.t("nlp_sentiment_ne"): self.t("nlp_sentiment_ne_review"),
@@ -114,7 +114,7 @@ class NLPPage(BasePage):
                     # Langues problématiques pour le wordcloud
                     LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
                     if detected_lang in LANGS_NO_WORDCLOUD:
-                        self.st.info("ℹ️self.t("nlp_no_wc_lang"))
+                        self.st.info(f"ℹ️ {self.t('nlp_no_wc_lang')}")
                         self.st.markdown(f'<div class="custom-sentiment">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
                     else:
                         # For non-Asian languages, just display normally
