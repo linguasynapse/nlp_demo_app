@@ -5,37 +5,12 @@ import jieba
 import matplotlib.pyplot as plt
 from collections import Counter
 from wordcloud import WordCloud
-import onnxruntime as ort
-from transformers import AutoTokenizer
-#from transformers.pipelines import pipeline
+from transformers.pipelines import pipeline
 from langdetect import detect, detect_langs, DetectorFactory
 from langdetect.lang_detect_exception import LangDetectException
 import langid
 import os
 DetectorFactory.seed = 0
-
-class OnnxSentimentModel:
-    def __init__(self, model_id):
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id)
-        self.session = ort.InferenceSession(
-            f"https://huggingface.co/{model_id}/resolve/main/model.onnx",
-            providers=["CPUExecutionProvider"]
-        )
-
-    def __call__(self, text):
-        inputs = self.tokenizer(text, return_tensors="np")
-        outputs = self.session.run(None, dict(inputs))
-        logits = outputs[0]
-
-        # Softmax
-        import numpy as np
-        probs = np.exp(logits) / np.exp(logits).sum(-1, keepdims=True)
-        label_id = probs.argmax(-1)[0]
-        score = probs[0][label_id]
-
-        labels = ["negative", "neutral", "positive"]
-        return [{"label": labels[label_id], "score": float(score)}]
-
 class NLPPage(BasePage):
 
     # -------------------------------------------------
@@ -80,14 +55,10 @@ class NLPPage(BasePage):
     # -------------------------------------------------
     def load_model(self):
         self.model_notice(self.t("nlp_loading_model"))
-        return OnnxSentimentModel("onnx-community/xlm-roberta-base-sentiment")
-        #return pipeline(
-        #    "sentiment-analysis",
-        #    model="finiteautomata/bertweet-base-sentiment-analysis", # Streamlit Cloud compatible
-            #model="nlptown/bert-base-multilingual-uncased-sentiment",
-        #    device=None, #disable torch on Steamlit Cloud
-        #    framework="pt", #no automatic detection (no torch)
-        #)
+        return pipeline(
+            "sentiment-analysis",
+            model="nlptown/bert-base-multilingual-uncased-sentiment"
+        )
 
     def get_model(self):
         return self.hybrid_cache_get("sentiment_model", self.load_model)
@@ -127,7 +98,6 @@ class NLPPage(BasePage):
                     detected_lang = self.st.session_state.get("detected_lang", "en")
                 
                     # Analyze sentiment
-                    
                     label, score = self.analyze_sentiment(raw_text)
                     self.st.session_state["sentiment_model_loaded"] = True
                 
