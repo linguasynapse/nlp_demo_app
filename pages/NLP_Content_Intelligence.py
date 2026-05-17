@@ -108,7 +108,7 @@ class NLPPage(BasePage):
                     self.st.caption(f"{self.t('nlp_detected_lang')}{lang}")
                 
                     # Display sentiment result
-                    self.normalize_sentiment(label)
+                    sentiment_text = self.normalize_sentiment(label)
                     self.st.markdown(f'<div style="font-size: 24px; margin: 10px 0;">{sentiment_text}</div>', unsafe_allow_html=True)
                 else:
                     self.st.info(self.t("nlp_sentiment_run"))
