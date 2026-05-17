@@ -5,7 +5,8 @@ import jieba
 import matplotlib.pyplot as plt
 from collections import Counter
 from wordcloud import WordCloud
-from transformers.pipelines import pipeline
+from huggingface_hub import InferenceClient
+#from transformers.pipelines import pipeline
 from langdetect import detect, detect_langs, DetectorFactory
 from langdetect.lang_detect_exception import LangDetectException
 import langid
@@ -55,12 +56,16 @@ class NLPPage(BasePage):
     # -------------------------------------------------
     def load_model(self):
         self.model_notice(self.t("nlp_loading_model"))
-        return pipeline(
-            "sentiment-analysis",
-            model="finiteautomata/bertweet-base-sentiment-analysis", # Streamlit Cloud compatible
+        client = InferenceClient()
+        return lambda text: client.text_classification(
+            text,
+            model="nlptown/bert-base-multilingual-uncased-sentiment"
+        #return pipeline(
+        #    "sentiment-analysis",
+        #    model="finiteautomata/bertweet-base-sentiment-analysis", # Streamlit Cloud compatible
             #model="nlptown/bert-base-multilingual-uncased-sentiment",
-            device=None, #disable torch on Steamlit Cloud
-            framework="pt", #no automatic detection (no torch)
+        #    device=None, #disable torch on Steamlit Cloud
+        #    framework="pt", #no automatic detection (no torch)
         )
 
     def get_model(self):
@@ -101,7 +106,9 @@ class NLPPage(BasePage):
                     detected_lang = self.st.session_state.get("detected_lang", "en")
                 
                     # Analyze sentiment
-                    label, score = self.analyze_sentiment(raw_text)
+                    label = model(text)[0]["label"]
+                    score = model(text)[0]["score"]
+                    #label, score = self.analyze_sentiment(raw_text)
                     self.st.session_state["sentiment_model_loaded"] = True
                 
                     # Display confidence score
