@@ -99,25 +99,42 @@ class NLPPage(BasePage):
                 
                     # Analyze sentiment
                     label, score = self.analyze_sentiment(raw_text)
+
+                    # Save the session state
                     self.st.session_state["sentiment_model_loaded"] = True
+                    self.st.session_state["last_analysis"] = {
+                        "lang": lang,
+                        "detected_lang": detected_lang,
+                        "label": label,
+                        "score": score,
+                        "sentiment_text": self.normalize_sentiment(label),
+                        "raw_text": raw_text
+                    }
+                    # Display from the section state if available
+                    if "last_analysis" in self.st.session_state:
+                        data = self.st.session_state["last_analysis"]
+                    
+                        # Display confidence score
+                        self.st.metric(self.t("nlp_confidence"), round(data["score"], 3))
                 
-                    # Display confidence score
-                    self.st.metric(self.t("nlp_confidence"), round(score, 3))
-                
-                    # Display detected language
-                    self.st.caption(f"{self.t('nlp_detected_lang')}{lang}")
-                
-                    # Display sentiment result
-                    sentiment_text = self.normalize_sentiment(label)
-                    self.st.markdown(f'<div style="font-size: 24px; margin: 10px 0;">{sentiment_text}</div>', unsafe_allow_html=True)
-                else:
-                    self.st.info(self.t("nlp_sentiment_run"))
-                    with self.st.expander(f"ℹ️ {self.t('about_tool')}"):
-                        self.st.caption(self.t("nlp_sentiment_tool_info"))
-        # Word cloud section - SIMPLIFIED
-        if run and raw_text.strip():
-            detected_lang = self.st.session_state.get("detected_lang", "en")
+                        # Display detected language
+                        self.st.caption(f"{self.t('nlp_detected_lang')}{data['lang']}")
+
+                        # Display sentiment result
+                        sentiment_text = self.normalize_sentiment(label)
+                        self.st.markdown(f'<div style="font-size: 24px; margin: 10px 0;">{data["sentiment_text"]}</div>', unsafe_allow_html=True)
+                    else:
+                        self.st.info(self.t("nlp_sentiment_run"))
+                        with self.st.expander(f"ℹ️ {self.t('about_tool')}"):
+                            self.st.caption(self.t("nlp_sentiment_tool_info"))
+        # Word cloud section
+        if "last_analysis" in self.st.session_state:
+            data = self.st.session_state["last_analysis"]
+            detected_lang = data["detected_lang"]
+            raw_text = data["raw_text"]
             LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
+
+            # Checkbox
             if self.st.checkbox(self.t("nlp_show_wc"), value=True):
                 if detected_lang in LANGS_NO_WORDCLOUD:
                     self.st.info(f"ℹ️ {self.t('nlp_no_wc_lang')}")
