@@ -57,7 +57,10 @@ class NLPPage(BasePage):
         self.model_notice(self.t("nlp_loading_model"))
         return pipeline(
             "sentiment-analysis",
-            model="nlptown/bert-base-multilingual-uncased-sentiment"
+            model="finiteautomata/bertweet-base-sentiment-analysis", # Streamlit Cloud compatible
+            #model="nlptown/bert-base-multilingual-uncased-sentiment",
+            device=None, #disable torch on Steamlit Cloud
+            framework="pt", #no automatic detection (no torch)
         )
 
     def get_model(self):
