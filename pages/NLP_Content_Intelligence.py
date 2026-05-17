@@ -114,21 +114,6 @@ class NLPPage(BasePage):
                     self.st.info(self.t("nlp_sentiment_run"))
                     with self.st.expander(f"ℹ️ {self.t('about_tool')}"):
                         self.st.caption(self.t("nlp_sentiment_tool_info"))
-                    # Apply font styling only for specific languages
-                    # Langues problématiques pour le wordcloud
-                    #LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
-                    #if detected_lang in LANGS_NO_WORDCLOUD:
-                     #   self.st.info(f"ℹ️ {self.t('nlp_no_wc_lang')}")
-                      #  self.st.markdown(f'<div class="custom-sentiment">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
-                    #else:
-                        # For non-Asian languages, just display normally
-                     #   self.st.markdown(f'<div style="font-size: 24px; margin: 10px 0; ">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
-                
-                #else:
-                 #   self.st.info(self.t("nlp_sentiment_run"))
-                  #  with self.st.expander(f"ℹ️ {self.t('about_tool')}"):
-                   #     self.st.caption(self.t("nlp_sentiment_tool_info"))
-    
         # Word cloud section - SIMPLIFIED
         if run and raw_text.strip():
             detected_lang = self.st.session_state.get("detected_lang", "en")
