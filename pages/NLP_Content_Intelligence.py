@@ -111,30 +111,10 @@ class NLPPage(BasePage):
                     self.normalize_sentiment(label)
 
                     # Apply font styling only for specific languages
-                    if detected_lang in ["zh", "ja", "ko", "ar"]:
-                        font_families = {
-                            "zh": "Noto Sans SC",
-                            "ja": "Noto Sans JP",
-                            "ko": "Noto Sans KR",
-                            "ar": "Noto Sans Arabic"
-                        }
-                        font_family = font_families.get(detected_lang, "sans-serif")
-                    
-                        # Inject font and CSS
-                        font_html = f'<link href="https://fonts.googleapis.com/css2?family={font_family.replace(" ", "+")}:wght@400;500&display=swap" rel="stylesheet">'
-                        css = f"""
-                        <style>
-                        .custom-sentiment {{
-                            font-family: '{font_family}', sans-serif;
-                            font-size: 24px;
-                            font-weight: 500;
-                            margin: 10px 0;
-                            padding: 10px;
-                            
-                        }}
-                        </style>
-                        """
-                        self.st.markdown(font_html + css, unsafe_allow_html=True)
+                    # Langues problématiques pour le wordcloud
+                    LANGS_NO_WORDCLOUD = ["zh", "ja", "ko", "ar"]
+                    if detected_lang in LANGUES_NO_WORDCLOUD:
+                        self.st.info("ℹ️self.t("nlp_no_wc_lang"))
                         self.st.markdown(f'<div class="custom-sentiment">{self.normalize_sentiment(label)}</div>', unsafe_allow_html=True)
                     else:
                         # For non-Asian languages, just display normally
