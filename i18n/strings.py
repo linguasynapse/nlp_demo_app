@@ -81,7 +81,7 @@ STRINGS = {
         "data_dedup_threshold": "Similarity threshold",
         "data_dedup_threshold_help": "Use the similarity threshold slider (0.5–1) to control how strictly the tool detects duplicates. \nA higher threshold (e.g., 0.85–1.0) removes only segments that are nearly identical, preserving more content.\nA lower threshold (e.g., 0.6–0.75) removes even loosely similar segments, resulting in a more aggressively deduplicated dataset.\nThe default value of 0.8 provides a balanced sensitivity for most datasets. \nAdjust the slider based on how much variation you want to allow between segments—raising it reduces false duplicates, lowering it increases deduplication coverage.",
         "data_dedup_title": "Dataset Deduplication & Similarity Filtering",
-        "data_dedup_tool_info": "This demo illustrates how redundant or highly similar text segments can be identified and filtered before being used for NLP or AI tasks. Deduplication helps reduce dataset size, training cost, and bias while improving overall data quality.",
+        "data_dedup_tool_info": "This demo illustrates how                 redundant or highly similar text segments can be identified and filtered before being used for NLP or AI tasks. Deduplication helps reduce dataset size, training cost, and bias while improving overall data quality.",
         "data_engineering_title": "🔧 Data Engineering for AI",
         "footer_text": "© 2025 Lingua Synapse. All rights reserved.",
         "header_select_lang": "Select your language",
