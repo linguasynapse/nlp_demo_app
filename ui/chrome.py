@@ -157,14 +157,17 @@ def render_header():
     left, right = st.columns([2, 4], vertical_alignment="center")
 
     with left:
+        lang_label = t("header_select_lang")
+        lang_help_label = t("header_select_lang_help")
+
         st.session_state.lang_code = st.selectbox(
-            "",
+            lang_label,
             options=list(LANGUAGES.keys()),
             format_func=lambda x: LANGUAGES[x],
             index=list(LANGUAGES.keys()).index(st.session_state.lang_code),
             key="language_selector",
             label_visibility="collapsed",
-            help="Select interface language",
+            help=lang_help_label,
             width=100,
         )
     with right:
