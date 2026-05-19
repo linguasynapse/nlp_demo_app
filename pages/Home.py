@@ -22,7 +22,7 @@ class HomePage(BasePage):
             image=image_path
         )
         
-        self.st.caption(f"📱ℹ️ {self.t('menu_caption')})
+        self.st.caption(f"📱ℹ️ {self.t('menu_caption')}")
 
         # Section header
         self.section("home_metrics")
