@@ -37,7 +37,7 @@ class ContactPage(BasePage):
     # Privacy notice
     # -------------------------------------------------
     def render_privacy_notice(self):    
-        with self.card(f"🔏 {self.t("contact_privacy_notice")}", muted=True):
+        with self.card(f"🔏 {self.t('contact_privacy_notice')}", muted=True):
             with self.st.expander(self.t("contact_privacy_notice_expander")):
                 self.st.markdown(f"{self.t("contact_privacy_notice_content")}")
 
