@@ -10,7 +10,7 @@ from debug_console import debug_console
 
 st.set_page_config(
     page_title="AI-Powered Language Solutions",
-    page_icon="assets/logo_dark.png",
+    page_icon="ui/assets/logo_dark.png",
     layout="wide",
     #initial_sidebar_state=None,
     menu_items={
